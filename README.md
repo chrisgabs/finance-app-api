@@ -6,7 +6,7 @@ A Typescript Express API boilerplate that utilizes mongoDB as database and chalk
 
 Create a .env file for mongo db credentials.
 
-```json
+```
 MONGO_USERNAME = name
 MONGO_PASSWORD = password
 
