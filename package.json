@@ -1,7 +1,7 @@
 {
-    "name": "finance-app-api",
+    "name": "express-ts-boilerplate",
     "version": "1.0.0",
-    "description": "",
+    "description": "A Typescript Express API boilerplate that utilizes mongoDB as database and chalk for logging.",
     "type": "commonjs",
     "main": "src/server.ts",
     "scripts": {
