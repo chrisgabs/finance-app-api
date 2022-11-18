@@ -9,6 +9,7 @@ Create a .env file for mongo db credentials.
 ```
 MONGO_USERNAME = name
 MONGO_PASSWORD = password
+MONGO_CLUSTER = cluster0.8lzugxg.mongodb.net/
 
 SERVER_PORT = 1337
 ```
