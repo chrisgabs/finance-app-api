@@ -3,6 +3,7 @@ import express from "express";
 import http from "http";
 import mongoose from "mongoose";
 import Logging from "./library/Logging";
+import recordRoutes from "./routes/Record";
 
 const router = express();
 
@@ -46,6 +47,7 @@ const StartServer = () => {
     });
 
     /* Put routes here */
+    router.use("/records", recordRoutes);
 
     /* Health Check */
     router.get("/ping", (req, res) => res.status(200).json({ message: "poggers" }));
