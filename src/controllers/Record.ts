@@ -8,7 +8,7 @@ const createRecord = (req: Request, res: Response, next: NextFunction) => {
         type: req.body.type,
         account: req.body.account,
         amount: req.body.amount,
-        date: req.body.date,
+        date: new Date(),
     });
 
     record
@@ -31,10 +31,11 @@ const createRecord = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getRecords = (req: Request, res: Response, next: NextFunction) => {
-    Record.find()
+    Record.find({})
         .exec()
         .then((docs) => {
-            res.status(200).json(docs);
+            let response: any = { message: "Records fetched", body: docs };
+            res.status(200).json(response);
         })
         .catch((err) => {
             res.status(500).json({ error: err });

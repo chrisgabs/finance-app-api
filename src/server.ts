@@ -22,12 +22,13 @@ mongoose
 const StartServer = () => {
     /* Log all requests to console */
     router.use((req, res, next) => {
-        Logging.info(`Incoming -> ${req.method} ${req.url} ${req.path}`);
+        Logging.info(`Incoming -> METHOD-[${req.method}] URL-[${req.url}] PATH-[${req.path}]`);
 
         /* Log responses */
         res.on("finish", () => {
             Logging.info(`Outgoing -> ${req.method} ${req.url} ${req.path} ${res.statusCode}`);
         });
+        next();
     });
 
     router.use(express.urlencoded({ extended: true }));
@@ -64,3 +65,5 @@ const StartServer = () => {
         Logging.info(`Server started on port ${config.server.port}`);
     });
 };
+
+// StartServer();
