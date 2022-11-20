@@ -34,8 +34,7 @@ const getRecords = (req: Request, res: Response, next: NextFunction) => {
     Record.find({})
         .exec()
         .then((docs) => {
-            let response: any = { message: "Records fetched", body: docs };
-            res.status(200).json(response);
+            res.status(200).json(docs);
         })
         .catch((err) => {
             res.status(500).json({ error: err });
@@ -43,18 +42,17 @@ const getRecords = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getRecord = (req: Request, res: Response, next: NextFunction) => {
-    const id = req.params.recordId;
-
+    const id = req.params.id;
     Record.findById(id)
         .then((record) => (record ? res.status(200).json(record) : res.status(404).json({ message: "No valid entry found for provided ID" })))
         .catch((err) => res.status(500).json({ error: err }));
 };
 
 const deleteRecord = (req: Request, res: Response, next: NextFunction) => {
-    const id = req.params.recordId;
+    const id = req.params.id;
 
     Record.findByIdAndDelete(id)
-        .then((record) => (record ? res.status(200).json({ message: "Record deleted" }) : res.status(404).json({ message: "No valid entry found for provided ID" })))
+        .then((record) => (record ? res.status(200).json({ message: "Record deleted", deleted: true }) : res.status(404).json({ message: "No valid entry found for provided ID" })))
         .catch((err) => res.status(500).json({ error: err }));
 };
 

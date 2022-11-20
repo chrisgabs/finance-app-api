@@ -4,6 +4,8 @@ import http from "http";
 import mongoose from "mongoose";
 import Logging from "./library/Logging";
 import recordRoutes from "./routes/Record";
+import sessions from "express-session";
+import cookieParser from "cookie-parser";
 
 const router = express();
 
@@ -46,6 +48,17 @@ const StartServer = () => {
 
         next();
     });
+
+    /* Set up sessions */
+    router.use(sessions({ secret: "superSecretString", resave: false, saveUninitialized: false }));
+    router.use(cookieParser());
+    /* Check if user logged in */
+    // router.use((req, res, next) => {
+    //     // if (req.cookies.user_sid && !req.session.user) {
+    //     //     res.clearCookie("user_sid");
+    //     // }
+    //     // next();
+    // });
 
     /* Put routes here */
     router.use("/records", recordRoutes);
