@@ -16,7 +16,7 @@ const createRecord = (req: Request, res: Response, next: NextFunction) => {
         .then((result) => {
             res.status(201).json({
                 message: "Record created",
-                createdRecord: {
+                record: {
                     _id: result._id,
                     type: result.type,
                     account: result.account,

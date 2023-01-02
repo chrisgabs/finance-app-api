@@ -4,6 +4,7 @@ import http from "http";
 import mongoose from "mongoose";
 import Logging from "./library/Logging";
 import recordRoutes from "./routes/Record";
+import userRoutes from "./routes/User";
 import sessions from "express-session";
 import cookieParser from "cookie-parser";
 
@@ -62,6 +63,7 @@ const StartServer = () => {
 
     /* Put routes here */
     router.use("/records", recordRoutes);
+    router.use("/users", userRoutes);
 
     /* Health Check */
     router.get("/ping", (req, res) => res.status(200).json({ message: "poggers" }));
