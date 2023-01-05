@@ -1,27 +1,29 @@
 import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import User from "../models/User";
-
-    // name: string;
-    // picture: string;
-    // accounts: Array<AccountSchema>;
-    // records: Array<RecordSchema>;
+import Account from "../models/Account";
 
 const createUser = (req: Request, res: Response, next: NextFunction) => {
-    const record = new User({
+    const user = new User({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         picture: req.body.picture,
-        accounts: [], // is this legal
+        accounts: [new Account({
+            _id: new mongoose.Types.ObjectId(),
+            name: req.body.accounts[0].name,
+            type: req.body.accounts[0].type,
+            amount: req.body.accounts[0].amount,
+            color: req.body.accounts[0].color,
+        })], // is this legal
         records: [],
     });
 
-    record
+    user
         .save()
         .then((result) => {
             res.status(201).json({
-                message: "Record created",
-                createdRecord: {
+                message: "User created",
+                user: {
                     _id: result._id,
                     name: result.name,
                     picture: result.picture,

@@ -1,13 +1,13 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-export interface AccountSchema extends Document {
+export interface IAccount extends Document {
     name: string;
     type: string;
     amount: number;
     color: string;
 }
 
-const RecordSchema = new Schema(
+const AccountSchema:Schema = new Schema(
     {
         name: { type: String, required: true },
         type: { type: String, required: true },
@@ -17,4 +17,4 @@ const RecordSchema = new Schema(
     { versionKey: false }
 );
 
-export default mongoose.model<AccountSchema>("User", RecordSchema);
+export default mongoose.model<IAccount>("Account", AccountSchema);

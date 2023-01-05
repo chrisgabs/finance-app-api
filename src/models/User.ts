@@ -1,22 +1,22 @@
 import mongoose, { Document, Schema } from "mongoose";
-import {RecordSchema} from "./Record";
-import {AccountSchema} from "./Account";
+import RecordSchema from "./Record";
+import AccountSchema from "./Account";
 
-export interface UserSchema extends Document {
+export interface IUser extends Document {
     name: string;
     picture: string;
-    accounts: Array<AccountSchema>;
-    records: Array<RecordSchema>;
+    accounts: Array<any>;
+    records: Array<any>;
 }
 
-const RecordSchema = new Schema(
+const UserSchema:Schema = new Schema(
     {
         name: { type: String, required: true },
         picture: { type: String, required: true },
-        accounts: { type: Array, required: true },
-        records: { type: Array, required: true }
+        accounts: { type: [AccountSchema.schema], required: true },
+        records: { type: [RecordSchema.schema], required: true }
     },
     { versionKey: false }
 );
 
-export default mongoose.model<UserSchema>("User", RecordSchema);
+export default mongoose.model<IUser>("User", UserSchema);
