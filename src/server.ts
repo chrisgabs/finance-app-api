@@ -5,11 +5,11 @@ import mongoose from "mongoose";
 import Logging from "./library/Logging";
 import recordRoutes from "./routes/Record";
 import userRoutes from "./routes/User";
+import authRoutes from "./routes/Auth";
 import sessions from "express-session";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
-
-import { RequestHandler } from "express";
+import { jwtAuth } from "./library/Auth";
 
 // put this in a different file (types.d.ts)
 declare module "express-serve-static-core" {
@@ -36,19 +36,6 @@ const router = express();
 //         Logging.error("Error connecting to MongoDB.");
 //         Logging.error(err);
 //     });
-
-
-const jwtAuth:RequestHandler = (req, res, next) => {
-    const token = req.cookies.token;
-    try {
-        const user = jwt.verify(token, "adsadad");
-        req.user = user;
-        next();
-    } catch (err) {
-        res.clearCookie("token");
-        return res.redirect("/");
-    }
-};
 
 // TODO: Add Helm? Research different middleware options.
 const StartServer = () => {
@@ -80,7 +67,6 @@ const StartServer = () => {
     });
 
     /* Set up JWT */
-    router.use(sessions({ secret: "superSecretString", resave: false, saveUninitialized: false }));
     router.use(cookieParser());
 
     /* Check if user logged in */
@@ -97,20 +83,9 @@ const StartServer = () => {
     // });
 
     /* Put routes here */
-    router.post("/login", (req, res) => {
-        const user = { id: req.body.id };
-        const token = jwt.sign(user, config.auth.accessTokenSecret as string, { expiresIn: "1h" });
-        res.cookie("token", token);
-        console.log(token)
-        res.status(200).json({ message: "logged in" });
-    })
-
-    router.delete("/logout", (req, res) => {
-        req.session.destroy(() => res.status(200).json({ message: "logged out" }));
-    })
-
-    router.use("/records", recordRoutes);
-    router.use("/users", userRoutes);
+    router.use("/auth", authRoutes);
+    router.use("/records", jwtAuth, recordRoutes);
+    router.use("/users", jwtAuth, userRoutes);
 
     /* Health Check */
     router.get("/ping", (req, res) => res.status(200).json({ message: "poggers" }));
