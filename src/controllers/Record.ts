@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import Record from "../models/Record";
 
 const createRecord = (req: Request, res: Response, next: NextFunction) => {
+    // Session ID is undefined
     const record = new Record({
         _id: new mongoose.Types.ObjectId(),
         type: req.body.type,
