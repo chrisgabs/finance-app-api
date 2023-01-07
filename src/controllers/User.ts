@@ -63,4 +63,15 @@ const deleteUser = (req: Request, res: Response, next: NextFunction) => {
         .catch((err) => res.status(500).json({ error: err }));
 };
 
-export default { createUser, getAllUsers, getUser, deleteUser };
+// import { JwtPayload } from "jsonwebtoken";
+
+const resumeSession = (req: Request, res: Response, next: NextFunction) => {
+    // TODO: fix req.user.id type error
+    // @ts-ignore
+    const id = req.user.id;
+    User.findById(id)
+        .then((user) => (user ? res.status(200).json(user) : res.status(404).json({ message: "No valid entry found for provided ID" })))
+        .catch((err) => res.status(500).json({ error: err }));
+}
+
+export default { createUser, getAllUsers, getUser, deleteUser, resumeSession};

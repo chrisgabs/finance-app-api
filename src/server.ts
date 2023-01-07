@@ -26,16 +26,16 @@ declare module "express-serve-static-core" {
 
 const router = express();
 
-// mongoose
-//     .connect(config.mongo.url, { retryWrites: true, w: "majority" })
-//     .then(() => {
-//         Logging.info("Successfully connected to MongoDB.");
-//         StartServer();
-//     })
-//     .catch((err) => {
-//         Logging.error("Error connecting to MongoDB.");
-//         Logging.error(err);
-//     });
+mongoose
+    .connect(config.mongo.url, { retryWrites: true, w: "majority" })
+    .then(() => {
+        Logging.info("Successfully connected to MongoDB.");
+        StartServer();
+    })
+    .catch((err) => {
+        Logging.error("Error connecting to MongoDB.");
+        Logging.error(err);
+    });
 
 // TODO: Add Helm? Research different middleware options.
 const StartServer = () => {
@@ -104,4 +104,4 @@ const StartServer = () => {
 };
 
 
-StartServer();
+// StartServer();
